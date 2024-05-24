@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./api
+    volumes:
+      - ./api:/app
+      - /app/venv
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  frontend:
+    build:
+      context: ./ui
+    volumes:
+      - ./ui:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: npm start
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
